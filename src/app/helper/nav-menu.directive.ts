@@ -96,10 +96,12 @@ export class NavMenuDirective {
     })
 
     //Binding events to Items
-    let $Obs = Observable.fromEvent($('.navRow0,.navRow1'), 'mouseout');
-    $Obs.subscribe(() => {
-      console.log('hi')
-    })
+    let $ObsOut = Observable.fromEvent($('.navRow0 div,.navRow1 div'), 'mouseout').debounceTime(500);
+    let $ObsIn = Observable.fromEvent($('.navRow0 div,.navRow1 div'), 'mouseover').debounceTime(500);
+    let $ObsMerge = Observable.race($ObsIn, $ObsOut).subscribe(() => {
+      console.log('hi');
+    });
+
 
   }
 
